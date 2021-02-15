@@ -1,5 +1,6 @@
 package me.sheak.sadi.Core.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -9,7 +10,7 @@ import java.io.*;
 public class Playerjoin implements Listener {
     @EventHandler
     public void onFirstJoin(PlayerJoinEvent e){
-        if(e.getPlayer().hasPlayedBefore() ){
+        if(!e.getPlayer().hasPlayedBefore() ){
             e.getPlayer().sendMessage(readfile());
         }
     }
@@ -37,8 +38,12 @@ public class Playerjoin implements Listener {
             sb.append(line);
             sb.append("\n");
             }
-            return sb.toString();
+            String s= sb.toString();
 
+            String d ;
+
+            d=ChatColor.translateAlternateColorCodes('&',s);
+            return d;
 
         } catch (FileNotFoundException e) {
             createfile();
