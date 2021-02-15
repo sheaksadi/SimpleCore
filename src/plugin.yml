@@ -1,0 +1,9 @@
+name: Core
+version: 1.0
+author: sadi
+main: me.sheak.sadi.Core.Main
+api-version: 1.14
+
+commands:
+  discord:
+    usage: /<discord>

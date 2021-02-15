@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SimpleCore:jar">
+    <output-path>E:/server/plugins</output-path>
+    <root id="archive" name="SimpleCore.jar">
+      <element id="module-output" name="SimpleCore" />
+    </root>
+  </artifact>
+</component>
