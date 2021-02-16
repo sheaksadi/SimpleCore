@@ -10,23 +10,33 @@ import java.io.*;
 public class Playerjoin implements Listener {
     @EventHandler
     public void onFirstJoin(PlayerJoinEvent e){
-        if(!e.getPlayer().hasPlayedBefore() ){
+        if(e.getPlayer().hasPlayedBefore() ){
             e.getPlayer().sendMessage(readfile());
         }
     }
 
-    public void createfile(){
-
+    public String createfile(){
+        String st ="&adeadhorse&e*smp &7commands:\n" +
+                "&e /sethome &a<name> &7 - set your home.\n" +
+                "&e /home &a<name> &7 - teleport to your home.\n" +
+                "&e /spawn &7 - teleport to spawn.\n" +
+                "&e /tpa &a<name> &7 - send a tp request to another player.\n" +
+                "&e /discord &7 - discord server.\n" +
+                "&e /warp &a<name> &7 - teleport to a specified location.\n" +
+                "&e /msg &a<name> <message> &7 - write a private message.\n" +
+                "&e /land &7 - open protetion GUI.\n" +
+                "&e /land help &7 - show protection help.";
         try {
             FileWriter  fr = new FileWriter("plugins/core.txt",false);
             PrintWriter printWriter =new PrintWriter(fr);
-
+            printWriter.print(st);
             printWriter.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
+        return st;
     }
 
     public String readfile(){
@@ -39,14 +49,16 @@ public class Playerjoin implements Listener {
             sb.append("\n");
             }
             String s= sb.toString();
-
             String d ;
-
             d=ChatColor.translateAlternateColorCodes('&',s);
             return d;
 
         } catch (FileNotFoundException e) {
-            createfile();
+            String s=createfile();
+            String d ;
+            d=ChatColor.translateAlternateColorCodes('&',s);
+            return d;
+
         } catch (IOException e) {
             e.printStackTrace();
         }

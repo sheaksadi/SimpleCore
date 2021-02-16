@@ -10,20 +10,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
+        Commands commands=new Commands();
         getServer().getPluginManager().registerEvents(new Playerjoin(),this);
+        getCommand("discord").setExecutor(commands);
+        getCommand("giveway").setExecutor(commands);
     }
 
     @Override
     public void onDisable() {
 
     }
-    public boolean onCommand(CommandSender sender, Command cmd,String str,String[] args){
-        if(str.equalsIgnoreCase("discord")){
-            if(sender instanceof Player){
-                sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Sb4ZNqvC");
-                return true;
-            }
-        }
-        return false;
-    }
+
+
+
 }
