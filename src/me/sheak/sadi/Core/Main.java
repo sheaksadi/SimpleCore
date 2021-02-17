@@ -13,7 +13,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Playerjoin(),this);
         getCommand("discord").setExecutor(commands);
         getCommand("giveway").setExecutor(commands);
-        getCommand("giveway").setTabCompleter(new Tabcompleterrr());
+       // getCommand("giveway").setTabCompleter(new Tabcompleterrr());
     }
 
     @Override
