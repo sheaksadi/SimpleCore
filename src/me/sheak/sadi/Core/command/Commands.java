@@ -1,7 +1,12 @@
 package me.sheak.sadi.Core.command;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,9 +25,28 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args){
         if(str.equalsIgnoreCase("discord")){
             if(sender instanceof Player){
-                sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Sb4ZNqvC");
-                return true;
+                if (args.length==0) {
+                    TextComponent massage = new TextComponent("Deadhorse&e*smp "+ChatColor.BOLD+ "Discord");
+                    massage.setColor(ChatColor.GREEN);
+                    massage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/Sb4ZNqvC"));
+                    massage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text(ChatColor.GOLD+ "Click here to join Discord Server")));
+                    //sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Sb4ZNqvC");
+                    sender.spigot().sendMessage(massage);
+                    return true;
+                }
+
+
+
+
+
             }
+
+
+
+
+
+
+
         }
 
 
@@ -208,7 +232,7 @@ public class Commands implements CommandExecutor {
                     }
 
                 }else {
-                    sender.sendMessage(ChatColor.BLUE+"/giveway <winners> <command> (use player insted of name player will be chenged to winner ");
+                    sender.sendMessage(ChatColor.BLUE+"/giveway <winners> <command> (use player insted of name player will be chenged to winner )");
                 }
                 return true;
             }
