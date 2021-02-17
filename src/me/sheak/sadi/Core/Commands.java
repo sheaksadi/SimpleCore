@@ -8,15 +8,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.Collections;
 
 
 
 
 public class Commands implements CommandExecutor {
 
-    List<Integer> list;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args){
@@ -50,13 +48,29 @@ public class Commands implements CommandExecutor {
 
                         Player[] players= Bukkit.getOnlinePlayers().toArray(new Player[activeplayers]);
 
-                        for( int x = 0;x <times;x++ ){
-                            int randomplayer=returnrand(activeplayers,sender);
-                            Bukkit.dispatchCommand(sender,arg0+" "+arg1+" "+arg2+" "+players[randomplayer].getDisplayName()+" "+amount);
+                        ArrayList<Integer> list = new ArrayList<Integer>();
+                        for (int i=0; i<activeplayers; i++) {
+                            list.add(i);
+                        }
+                        Collections.shuffle(list);
 
+                        if (activeplayers==1) {
+                            Bukkit.dispatchCommand(sender, arg0 + " " + arg1 + " " + arg2 + " " + players[0].getDisplayName() + " " + amount);
+                            return true;
+                        }
+                        try{
+
+
+                             for( int x = 0;x <times;x++ ){
+                                 int randomplayer=list.get(x);
+                                Bukkit.dispatchCommand(sender,arg0+" "+arg1+" "+arg2+" "+players[randomplayer].getDisplayName()+" "+amount);
+
+                             }
+                        }catch (Exception e){
+                            sender.sendMessage(ChatColor.RED+"Their aren't that much player");
                         }
                     }
-                    catch (IllegalArgumentException e){
+                    catch (Exception e){
                         sender.sendMessage(ChatColor.RED+"/giveway crates givekey <crate> <amount> <winners>");
                     }
 
@@ -66,24 +80,7 @@ public class Commands implements CommandExecutor {
 
             }
         }
-        return false;
+        return true;
     }
 
-    public int returnrand(int activeplayers ,CommandSender sender){
-        try {
-            Random rand = new Random();
-            int randomplayer = rand.nextInt(activeplayers);
-            list = new ArrayList<Integer>();
-            if (list.contains(randomplayer))
-                returnrand(activeplayers,sender);
-
-            list.add(randomplayer);
-
-
-            return randomplayer;
-        }catch (Exception e){
-            sender.sendMessage(ChatColor.RED+"Their aren't that much player");
-        }
-        return 1;
-    }
 }
