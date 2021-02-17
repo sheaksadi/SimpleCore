@@ -1,4 +1,4 @@
-package me.sheak.sadi.Core.events;
+package me.sheak.sadi.Core.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package me.sheak.sadi.Core;
+package me.sheak.sadi.Core.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

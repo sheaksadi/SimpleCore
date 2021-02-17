@@ -1,7 +1,8 @@
 package me.sheak.sadi.Core;
 
+import me.sheak.sadi.Core.command.Commands;
 import me.sheak.sadi.Core.events.Playerjoin;
-import me.sheak.sadi.Core.events.Tabcompleterrr;
+import me.sheak.sadi.Core.command.Tabcompleterrr;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
