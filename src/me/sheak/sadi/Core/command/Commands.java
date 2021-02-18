@@ -7,10 +7,12 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,6 +33,8 @@ public class Commands implements CommandExecutor {
 
     private int taskid=-1;
 
+    private boolean barrunning=false;
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String str, String[] args){
         if(str.equalsIgnoreCase("discord")){
@@ -50,7 +54,14 @@ public class Commands implements CommandExecutor {
         if(str.equalsIgnoreCase("giveway")){
             if (sender.hasPermission("giveway")){
                 if(args.length>=2){
+                    if (barrunning){
+                        sender.sendMessage(format("&c[&adeadhorse&e*giveaway&c]&bA giveway is already running "));
+                        return true;
+                    }
+
                     try {
+
+
                         //String arg = args[0];
                         String arg1=null;
                         String arg2=null ;
@@ -144,8 +155,12 @@ public class Commands implements CommandExecutor {
                                 times = Integer.parseInt(args[0]);
                             }
                             catch (Exception e){
-                             times =1;
+                             sender.sendMessage(ChatColor.AQUA+"/giveway <winners> <command> (use player insted of name player will be chenged to winner )");
+                             return  true;
                             }
+
+                            //Player player = (Player)sender;
+
 
                         int activeplayers = Bukkit.getOnlinePlayers().size();
 
@@ -194,30 +209,73 @@ public class Commands implements CommandExecutor {
                             if(arg0!=(null))
                                 commandd=arg1+" "+arg2+" "+arg3+" "+arg4+" "+arg5+" "+arg6+" "+arg7+" "+arg8+" "+arg9+" "+arg0;
 
-                            sender.getServer().broadcastMessage("[deadhorse*giveaway] "+ChatColor.YELLOW+ " Giveaway has been started!");
+
+                            final int Times=times;
+
+                            final String Commandd=commandd;
+
+                            sender.getServer().broadcastMessage(format("&c[&adeadhorse&e*giveaway&c]")+ChatColor.YELLOW+ " Giveaway has been started!");
+
+
+
 
 
                             bar= Bukkit.createBossBar(format("&e&lGiveaway has been started!"), BarColor.YELLOW, BarStyle.SOLID);
                             bar.setVisible(true);
-                            bar.addPlayer((Player)sender);
+                            barrunning=true;
+
+                            for(Player p :Bukkit.getOnlinePlayers()){
+                                bar.addPlayer(p);
+                                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 2.0F, 1.0F);
+
+                            }
+
+
+
+                            //bar.addPlayer((Player)sender);
 
                             taskid=Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
                                 int count =-1;
                                 double progress =1.0;
-                                double time=1.0/200;
+                                double time=1.0/400;
 
                                 @Override
                                 public void run() {
-
+                                try {
                                     bar.setProgress(progress);
+                                }catch (Exception e){
+                                    bar.removeAll();
+                                    Bukkit.getScheduler().cancelTask(taskid);
+                                    sender.sendMessage(ChatColor.RED +"too many giveways");
 
+                                }
                                     progress=progress-time;
                                     if(progress<=0){
                                         bar.removeAll();
 
+                                    try {
 
 
+                                        for (int x = 0; x < Times; x++) {
+                                            int randomplayer = list.get(x);
 
+                                            String ncommand = Commandd.replaceAll("player", players[randomplayer].getName());
+                                            sender.getServer().broadcastMessage(format("&c[&adeadhorse&e*giveaway&c]") + ChatColor.YELLOW + "" + ChatColor.BOLD + players[randomplayer].getDisplayName() + "" + ChatColor.AQUA + " has won the giveaway!");
+                                            Bukkit.dispatchCommand(sender, ncommand);
+
+
+                                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 2.5F, 1.0F);
+
+                                            }
+
+                                        }
+                                    } catch (Exception e) {
+                                        sender.sendMessage(format("&c[&adeadhorse&e*giveaway&c]")+ChatColor.AQUA+"Their aren't that much player");
+                                    }
+                                        barrunning=false;
+                                        Bukkit.getScheduler().cancelTask(taskid);
+                                        return;
                                     }
 
 
@@ -225,14 +283,6 @@ public class Commands implements CommandExecutor {
                             },0,0);
 
 
-                            for( int x = 0;x <times;x++ ){
-                                 int randomplayer=list.get(x);
-
-                                String ncommand= commandd.replaceAll("player",players[randomplayer].getName());
-                                sender.getServer().broadcastMessage(" [deadhorse*giveaway] "+ChatColor.YELLOW+""+ChatColor.BOLD +players[randomplayer].getDisplayName()+""+ChatColor.GRAY +" has won the giveaway!");
-                                Bukkit.dispatchCommand(sender,ncommand);
-
-                             }
                         }catch (Exception e){
                             sender.sendMessage(ChatColor.RED+"Their aren't that much player");
                         }
