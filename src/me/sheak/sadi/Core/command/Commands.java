@@ -12,7 +12,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,9 +40,9 @@ public class Commands implements CommandExecutor {
             if(sender instanceof Player){
                 if (args.length==0) {
                     TextComponent massage = new TextComponent(ChatColor.GREEN+ "Deadhorse"+ChatColor.YELLOW+"*smp "+ChatColor.BOLD+ "Discord");
-                    massage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/Sb4ZNqvC"));
+                    massage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/Twt8u7zUbh"));
                     massage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text(ChatColor.GOLD+ "Click here to join Discord Server")));
-                    //sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Sb4ZNqvC");
+                    //sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Twt8u7zUbh");
                     sender.spigot().sendMessage(massage);
                     return true;
                 }
@@ -235,7 +234,7 @@ public class Commands implements CommandExecutor {
                             //bar.addPlayer((Player)sender);
 
                             taskid=Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                                int count =-1;
+                                //int count =-1;
                                 double progress =1.0;
                                 double time=1.0/400;
 
