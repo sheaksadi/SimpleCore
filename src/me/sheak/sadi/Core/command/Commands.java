@@ -40,9 +40,9 @@ public class Commands implements CommandExecutor {
             if(sender instanceof Player){
                 if (args.length==0) {
                     TextComponent massage = new TextComponent(ChatColor.GREEN+ "Deadhorse"+ChatColor.YELLOW+"*smp "+ChatColor.BOLD+ "Discord");
-                    massage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/Twt8u7zUbh"));
+                    massage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/MYUaUs7d5r"));
                     massage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text(ChatColor.GOLD+ "Click here to join Discord Server")));
-                    //sender.sendMessage(ChatColor.GREEN +"https://discord.gg/Twt8u7zUbh");
+                    //sender.sendMessage(ChatColor.GREEN +"https://discord.gg/MYUaUs7d5r");
                     sender.spigot().sendMessage(massage);
                     return true;
                 }
